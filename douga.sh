@@ -29,12 +29,12 @@ print_today_lines() {
 }
 
 current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
-numbers=(1 5 13 29 61 125 253)
+numbers=(1 5 13 29 61 125 253 509 1021 2045 4093)
 print_today_lines
 
 if [[ $items != "" ]]
 then
 echo https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
-librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $list | cut -c 2-) 
+librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
 echo https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) | xclip -selection clipboard
 fi
