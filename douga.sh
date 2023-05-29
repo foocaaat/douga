@@ -8,7 +8,7 @@ if [ -n "$1" ]; then
   fi
 
   current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
-  id=$(echo "$2" | sed -n 's/.*youtube.com\/watch?v=\([^&]*\)\(&.*\)\{0,1\}$/\1/p')
+  id=$(echo "$1" | sed -n 's/.*youtube.com\/watch?v=\([^&]*\)\(&.*\)\{0,1\}$/\1/p')
   echo $current_date $id >> "$HOME/.cache/douga"
   echo "Added '$id' to $1 file."
   exit
