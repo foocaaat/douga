@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-
+path="youtube/"
 
 if [ -n "$1" ]; then
   if [ ! -f "$HOME/.cache/douga" ]; then
@@ -10,6 +10,7 @@ if [ -n "$1" ]; then
   current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
   id=$(echo "$1" | sed -n 's/.*youtube.com\/watch?v=\([^&]*\)\(&.*\)\{0,1\}$/\1/p')
   echo $current_date $id >> "$HOME/.cache/douga"
+  yt-dlp --path youtube -f b -o "%(id)s.%(ext)s" $1
   echo "Added '$id' to $1 file."
   exit
 exit
@@ -21,7 +22,8 @@ print_today_lines() {
         for n in "${numbers[@]}"; do
           if [ "$n" -eq "$space" ]; then
             id="$(echo "$line" | awk '{print $2}' )"
-            items=$items,$id
+            items="$items $path$id.mp4"
+            items2=$items2,$id
           fi
         done
   done < "$HOME/.cache/douga"
@@ -34,7 +36,7 @@ print_today_lines
 
 if [[ $items != "" ]]
 then
-echo https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
-librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
-echo https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) | xclip -selection clipboard
+echo https://www.youtube.com/watch_videos?video_ids=$(echo $items2 | cut -c 2-) | xclip -selection clipboard
+mpv --loop-playlist $items
+# librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
 fi
