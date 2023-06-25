@@ -37,6 +37,7 @@ print_today_lines
 if [[ $items != "" ]]
 then
 echo https://www.youtube.com/watch_videos?video_ids=$(echo $items2 | cut -c 2-) | xclip -selection clipboard
-mpv --loop-playlist $items
-# librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
+mpv --input-conf=$HOME/youtube/input.conf --no-osc --video-aspect=16:9 --volume=30 --loop-playlist $items &
+sleep 5
+i3-msg [class="mpv"] sticky enable, floating enable, resize set 400px 300px, move position  1505px 815px
 fi
