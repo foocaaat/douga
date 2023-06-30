@@ -9,9 +9,9 @@ if [ -n "$1" ]; then
 
   current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
   id=$(echo "$1" | sed -n 's/.*youtube.com\/watch?v=\([^&]*\)\(&.*\)\{0,1\}$/\1/p')
+  yt-dlp --path youtube -f b -o "%(id)s.%(ext)s" $id
   echo $current_date $id >> "$HOME/.cache/douga"
-  yt-dlp --path youtube -f b -o "%(id)s.%(ext)s" $1
-  echo "Added '$id' to $1 file."
+  echo "Added '$id' to $id file."
   exit
 exit
 fi
@@ -37,7 +37,6 @@ print_today_lines
 if [[ $items != "" ]]
 then
 echo https://www.youtube.com/watch_videos?video_ids=$(echo $items2 | cut -c 2-) | xclip -selection clipboard
-mpv --input-conf=$HOME/youtube/input.conf --no-osc --video-aspect=16:9 --volume=30 --loop-playlist $items &
-sleep 5
-i3-msg [class="mpv"] sticky enable, floating enable, resize set 400px 300px, move position  1505px 815px
+mpv --input-conf=$HOME/youtube/input.conf --geometry=15%+1-30 --volume=30 --loop-playlist $items
+# librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
 fi
