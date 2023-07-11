@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-path="youtube/"
+path="$HOME/youtube/"
 
 if [ -n "$1" ]; then
   if [ ! -f "$HOME/.cache/douga" ]; then
@@ -37,6 +37,5 @@ print_today_lines
 if [[ $items != "" ]]
 then
 echo https://www.youtube.com/watch_videos?video_ids=$(echo $items2 | cut -c 2-) | xclip -selection clipboard
-mpv --input-conf=$HOME/youtube/input.conf --geometry=15%+1-30 --volume=30 --loop-playlist $items
-# librewolf --new-tab https://www.youtube.com/watch_videos?video_ids=$(echo $items | cut -c 2-) 
+mpv --input-conf=$HOME/youtube/input.conf --no-terminal --no-osc --geometry=15%+1-60 --volume=30 --loop-playlist $items
 fi
