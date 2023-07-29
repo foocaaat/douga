@@ -9,7 +9,7 @@ if [ -n "$1" ]; then
 
   current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
   id=$(echo "$1" | sed -n 's/.*youtube.com\/watch?v=\([^&]*\)\(&.*\)\{0,1\}$/\1/p')
-  yt-dlp --path youtube -f b -o "%(id)s.%(ext)s" $id
+  yt-dlp --path youtube -f b -o "%(id)s" $id
   echo $current_date $id >> "$HOME/.cache/douga"
   echo "Added '$id' to $id file."
   exit
@@ -22,7 +22,7 @@ print_today_lines() {
         for n in "${numbers[@]}"; do
           if [ "$n" -eq "$space" ]; then
             id="$(echo "$line" | awk '{print $2}' )"
-            items="$items $path$id.mp4"
+            items="$path$id $items"
             items2=$items2,$id
           fi
         done
