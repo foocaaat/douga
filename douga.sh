@@ -2,6 +2,7 @@
 path="$HOME/youtube/"
 
 if [ -n "$1" ]; then
+if [ "$1" != "rev" ]; then
   if [ ! -f "$HOME/.cache/douga" ]; then
     echo "Creating $1 file..."
     touch "$HOME/.cache/douga"
@@ -15,6 +16,7 @@ if [ -n "$1" ]; then
   exit
 exit
 fi
+fi
 
 print_today_lines() {
   while IFS= read -r line; do
@@ -22,8 +24,13 @@ print_today_lines() {
         for n in "${numbers[@]}"; do
           if [ "$n" -eq "$space" ]; then
             id="$(echo "$line" | awk '{print $2}' )"
-            items="$path$id $items"
-            items2=$items2,$id
+            if [ "$1" == "rev" ]; then
+                items="$path$id $items"
+                items2=$items2,$id
+            else
+                items="$items $path$id"
+                items2=$id,$items2
+            fi
           fi
         done
   done < "$HOME/.cache/douga"
@@ -32,7 +39,7 @@ print_today_lines() {
 
 current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
 numbers=(1 5 13 29 61 125 253 509 1021 2045 4093)
-print_today_lines
+print_today_lines $1
 
 if [[ $items != "" ]]
 then
