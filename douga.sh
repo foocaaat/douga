@@ -35,10 +35,10 @@ print_today_lines() {
           if [ "$n" -eq "$space" ]; then
             id="$(echo "$line" | awk '{print $2}' )"
             if [ "$1" == "rev" ]; then
-                items="$path$id $items"
+                items="$path/$id $items"
                 items2=$items2,$id
             else
-                items="$items $path$id"
+                items="$items $path/$id"
                 items2=$id,$items2
             fi
           fi
