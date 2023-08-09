@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 path="$HOME/youtube/"
 
+
 if [ -n "$1" ]; then
 if [ "$1" != "rev" ]; then
   if [ ! -f "$HOME/.cache/douga" ]; then
@@ -9,8 +10,15 @@ if [ "$1" != "rev" ]; then
   fi
 
   current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
-  id=$(echo "$1" | sed -n 's/.*youtube.com\/watch?v=\([^&]*\)\(&.*\)\{0,1\}$/\1/p')
-  yt-dlp --path youtube -f b -o "%(id)s" $id
+  if [[ $1 =~ ^https://www.youtube.com/shorts/([a-zA-Z0-9_-]+)$ ]]; then
+    pos=$(expr "$1" : '.*rts/')
+    id=$(echo "$1" | cut -c $((pos+1))-$((pos+11)))
+else
+    pos=$(expr "$1" : '.*h?v=')
+    id=$(echo "$1" | cut -c $((pos+1))-$((pos+11)))
+  fi
+    echo $id
+  yt-dlp --retries --path youtube -f b -o "%(id)s" -- $id
   echo $current_date $id >> "$HOME/.cache/douga"
   echo "Added '$id' to $id file."
   exit
@@ -43,6 +51,5 @@ print_today_lines $1
 
 if [[ $items != "" ]]
 then
-echo https://www.youtube.com/watch_videos?video_ids=$(echo $items2 | cut -c 2-) | xclip -selection clipboard
-mpv --input-conf=$HOME/youtube/input.conf --no-terminal --no-osc --geometry=15%+1-60 --volume=30 --loop-playlist $items
+mpv  --geometry=15%+1-60 --volume=30 --loop-playlist $items
 fi
