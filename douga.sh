@@ -1,12 +1,12 @@
 #!/usr/bin/bash
-path="$HOME/youtube/"
+path="$HOME/youtube"
 
 
 if [ -n "$1" ]; then
 if [ "$1" != "rev" ]; then
-  if [ ! -f "$HOME/.cache/douga" ]; then
+  if [ ! -f "$path/douga" ]; then
     echo "Creating $1 file..."
-    touch "$HOME/.cache/douga"
+    touch "$path/douga"
   fi
 
   current_date=$(cat $HOME/.cache/morning | awk '{print $1;}')
@@ -18,12 +18,11 @@ else
     id=$(echo "$1" | cut -c $((pos+1))-$((pos+11)))
   fi
     echo $id
-  while [ ! -f "youtube/$id" ] ; do
-  yt-dlp --path youtube -f b -o "%(id)s" -- $id
+  while [ ! -f "$path/$id" ] ; do
+  yt-dlp --path $path -f b -o "%(id)s" -- $id
   done
-  echo $current_date $id >> "$HOME/.cache/douga"
+  echo $current_date $id >> "$path/douga"
   echo "Added '$id' to $id file."
-  echo e
   exit
 exit
 fi
@@ -44,7 +43,7 @@ print_today_lines() {
             fi
           fi
         done
-  done < "$HOME/.cache/douga"
+  done < "$path/douga"
 
 }
 
