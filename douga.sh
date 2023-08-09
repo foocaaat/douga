@@ -18,9 +18,12 @@ else
     id=$(echo "$1" | cut -c $((pos+1))-$((pos+11)))
   fi
     echo $id
-  yt-dlp --retries --path youtube -f b -o "%(id)s" -- $id
+  while [ ! -f "youtube/$id" ] ; do
+  yt-dlp --path youtube -f b -o "%(id)s" -- $id
+  done
   echo $current_date $id >> "$HOME/.cache/douga"
   echo "Added '$id' to $id file."
+  echo e
   exit
 exit
 fi
