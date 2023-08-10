@@ -18,9 +18,18 @@ else
     id=$(echo "$1" | cut -c $((pos+1))-$((pos+11)))
   fi
     echo $id
+  if [ -f "$1" ]; then
+      mpv $1
+      echo $current_date $(basename $1) >> "$path/douga"
+      exit
+  elif [ -f "$path/$id" ]; then
+      echo it already exist
+      exit
+  else
   while [ ! -f "$path/$id" ] ; do
   yt-dlp --path $path -f b -o "%(id)s" -- $id
   done
+  fi
   echo $current_date $id >> "$path/douga"
   echo "Added '$id' to $id file."
   exit
