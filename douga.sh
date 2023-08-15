@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-path="$HOME/youtube"
+path="$HOME/douga"
 
 
 if [ -n "$1" ]; then
@@ -17,7 +17,6 @@ else
     pos=$(expr "$1" : '.*h?v=')
     id=$(echo "$1" | cut -c $((pos+1))-$((pos+11)))
   fi
-    echo $id
   if [ -f "$1" ]; then
       mpv $1
       echo $current_date $(basename $1) >> "$path/douga"
@@ -26,6 +25,7 @@ else
       echo it already exist
       exit
   else
+    echo $id
   while [ ! -f "$path/$id" ] ; do
   yt-dlp --path $path -f b -o "%(id)s" -- $id
   done
@@ -62,5 +62,5 @@ print_today_lines $1
 
 if [[ $items != "" ]]
 then
-mpv  --geometry=15%+1-60 --volume=30 --loop-playlist $items
+mpv --no-sub --geometry=15%+1-60 --loop-playlist $items
 fi
