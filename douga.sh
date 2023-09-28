@@ -14,7 +14,7 @@ else
 
         if [ $todate -gt $cond ];
         then
-            sed -i.bak "1 s/.*/$(date '+%Y-%m-%d' -d "$(cat $path/douga | head -1) + 1 days")/" $HOME/douga/douga
+            sed -i.bak "1 s/.*/$(date '+%Y-%m-%d' -d "$(cat $path/douga | head -1) + 1 days")/" $path/douga
 
         else
             echo Yu have travel to the end of time 
@@ -70,7 +70,7 @@ if [ "$1" == "-fm" ]; then
             else
                 echo $current_date $(basename "$2"| replace ' '  '-') >> "$path/douga"
             fi
-            mpv --no-sub --geometry=15%+1+1 $path/$(basename "$2"| replace ' '  '-') --no-config
+            mpv --fullscreen --no-sub --geometry=15%+1+1 $path/$(basename "$2"| replace ' '  '-') --no-config
         elif [ -f "$path/$id" ]; then
             echo it already exist
         else
